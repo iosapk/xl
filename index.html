@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;width: 100%;background-color: #f77f00;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>node</title>
+    <style>
+        .w100 {
+            width: 100%;
+        }
+
+        .h100 {
+            height: 100%;
+        }
+
+        .flex-row-center {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-column-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-row-start {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .flex-column-start {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .flex-row-end {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .flex-column-end {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .flex-row-between {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flex-column-between {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flex-row-around {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .flex-column-around {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .mgb {
+            margin-bottom: 8px;
+        }
+
+        .item-box {
+            width: calc(50% - 20px);
+            padding: 16px 8px;
+            background-color: white;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+
+        .item-box-app {
+            width: calc(50% - 20px);
+            padding: 16px 8px;
+            height: 33px;
+            background-color: white;
+            border-radius: 16px;
+            font-size: 16px;
+        }
+    </style>
+    <script type="text/javascript">
+        let datalist = [
+            //{
+            //    title: '新加坡站2',
+            //    href: 'https://www.kuajingyouxuan1.com',
+            //    site: 'https://www.kuajingyouxuan1.com/speed.json',
+            //    value: undefined,
+            //    id: 'xjp2',
+            //},
+            //{
+            //    title: '香港站1',
+            //    href: 'https://www.kjyx001.com',
+            //    site: 'https://www.kjyx001.com/speed.json',
+            //    value: undefined,
+            //    id: 'site1',
+            //},
+            {
+                title: '腾讯',
+                href: 'https://v.qq.com/',
+                site: 'https://v.qq.com/speed.json',
+                value: undefined,
+                id: 'site1',
+            },
+            {
+                title: '优酷',
+                href: 'https://youku.com/',
+                site: 'https://youku.com/speed.json',
+                value: undefined,
+                id: 'site2',
+            },
+            {
+                title: '爱奇艺',
+                href: 'https://m.iqiyi.com/',
+                site: 'https://m.iqiyi.com/speed.json',
+                value: undefined,
+                id: 'site3',
+            },
+            {
+                title: '芒果',
+                href: 'https://m.mgtv.com/',
+                site: 'https://m.mgtv.com/speed.json',
+                value: undefined,
+                id: 'site4',
+            },
+			
+			            {
+                title: '乐视',
+                href: 'https://m.le.com/',
+                site: 'https://m.le.com/speed.json',
+                value: undefined,
+                id: 'site5',
+            },
+			            {
+                title: '搜狐',
+                href: 'https://m.tv.sohu.com/',
+                site: 'https://m.tv.sohu.com/speed.json',
+                value: undefined,
+                id: 'site6',
+            },
+        ]
+
+        function loadData() {
+
+
+            let width = window.innerWidth;
+            console.log(width)
+
+            let html = `<div class="w100 flex-row-center mgb" style="color: white;border-radius: 8px;font-size: 20px;font-weight: bold;">线路检测`;
+            html += `</div>`;
+            for (let i = 0; i < datalist.length; i++) {
+                let item = datalist[i];
+                html += `<div class="w100 flex-row-between mgb" style="background-color: white;border-radius: 8px;">`;
+                html += `<div class="item-box-app flex-row-center">${item.title}</div>`;
+                html += `<div class="item-box-app flex-row-around" id="${item.id}">${ '自动匹配中' }</div>`;
+                html += `<div class="item-box-app flex-row-around" style="padding: 10px 10px;font-size: 12px;background-color: #0AB7E4;color: white;" onclick="goNext('${item.href}')">点击进入</div>`;
+                html += `</div>`;
+            }
+
+
+            //
+            let parent = this.document.getElementById('super');
+            parent.innerHTML = html;
+
+
+            //
+
+        }
+
+
+        function site() {
+
+            for (let i = 0; i < datalist.length; i++) {
+                let site = datalist[i];
+                getSiteTime(site);
+            }
+        }
+
+        async function getSiteTime(site) {
+            let startTime = new Date().getTime();
+            // let res = await fetch(site.site,{method: "GET", mode: "no-cors"});
+            // let endTime = new Date().getTime();
+            // site.value = endTime - startTime;
+            // let html;
+            // if (site.value <= 200) {
+            //     html = `<div style="color: darkgreen;">${ site.value }</div>`
+            // } else if (site.value <= 1000) {
+            //     html = `<div style="color: darkorange;">${ site.value }</div>`
+            // } else {
+            //     html = `<div style="color: darkred;">${ site.value }</div>`
+            // }
+            //
+            // html += `<div style="padding: 8px 16px;font-size: 20px;background-color: #0AB7E4;border-radius: 5px;" onclick="goNext('${site.href}')">立即进入</div>`
+            //
+            // let parent = this.document.getElementById(site.id);
+            // parent.innerHTML = html;
+
+
+             fetch(site.site + '?r=' + Math.random(),{method:"GET",mode: "no-cors"}).then(data => {
+                // data.json()
+            }).then(res=>{
+                let endTime = new Date().getTime();
+                site.value = endTime - startTime;
+
+                let html;
+                if (site.value <= 200) {
+                    html = `<div style="color: darkgreen;">${ site.value }ms</div>`
+                } else if (site.value <= 1000) {
+                    html = `<div style="color: darkorange;">${ site.value }ms</div>`
+                } else {
+                    html = `<div style="color: darkred;">${ site.value }ms</div>`
+                }
+
+                // html += `<div style="padding: 8px 16px;font-size: 12px;background-color: #0AB7E4;border-radius: 5px;color: white;" onclick="goNext('${site.href}')">点击进入</div>`
+
+                let parent = this.document.getElementById(site.id);
+                parent.innerHTML = html;
+            })
+        }
+
+        function goNext(site) {
+            // console.log(`这里跳转${site}`)
+            window.location.href = site;
+        }
+
+        function f() {
+            let minIndex = -1;
+            let minValue = -1;
+            for (let i = 0; i < datalist.length; i++) {
+                let item = datalist[i];
+                if (item.value) {
+                    if (minIndex == -1) {
+                        minIndex = i;
+                        minValue = item.value;
+                    } else {
+                        if (item.value <= minValue) {
+                            minIndex = i;
+                            minValue = item.value;
+                        }
+                    }
+                }
+            }
+            if (minIndex != -1) {
+                let site = datalist[minIndex];
+                // console.log(`这里跳转${site.title}`)
+                window.location.href = site.href;
+                console.log(site)
+            } else {
+                setTimeout(()=>{
+                    f()
+                }, 2000)
+            }
+        }
+
+        site();
+        setTimeout(() => {
+            loadData();
+        }, 100)
+
+        setTimeout(()=>{
+            f()
+        },5000)
+
+    </script>
+</head>
+<body style="width: 100%;height: 100%;margin: 0;">
+<div class="h100 flex-row-center" style="margin: 8px;width: calc(100%)">
+<div class="flex-column-center" style="background-color: rgba(255,255,255,.5);border-radius: 8px;padding: 8px;width: calc(100% - 32px)" id="super">
+<!--    <div class="w100 flex-row-between">-->
+<!--        <div class="item-box">内容</div>-->
+<!--        <div class="item-box">值</div>-->
+<!--    </div>-->
+
+</div>
+</div>
+</body>
+</html>
